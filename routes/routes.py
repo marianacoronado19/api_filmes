@@ -9,7 +9,7 @@ router = APIRouter()
     description="Retorna uma mensagem de boas-vindas à API de Filmes.",
     status_code=200)
 def main_screen():
-    return {"Series": "Must Watch"}
+    return {"API": "Filmes"}
 
 @router.get("/api_filmes/{movie_id}",
     summary="Consultar item por ID",
@@ -17,15 +17,10 @@ def main_screen():
     status_code=200,
     response_model=Any
 )
-@router.get("/api_filmes/",
-    summary="Consultar todos os itens",
-    description="Retorna todos os registros da tabela especificada.",
-    status_code=200,
-    response_model=Any)
-def read_item (item_id: int = None):
-    api_filmes = API_Filmes(item={}, item_id=item_id)
+def read_item (movie_id: int = None):
+    api_filmes = API_Filmes(item={}, movie_id=movie_id)
 
-    resultado = api_filmes.consultarSerie()
+    resultado = api_filmes.consultar()
 
     return resultado
     
@@ -37,7 +32,7 @@ def read_item (item_id: int = None):
 def create_item(item: dict):
     api_filmes = API_Filmes(item=item) 
 
-    api_filmes.inserirSerie()
+    api_filmes.inserir()
 
     return {"message": "Item adicionado com sucesso!"}
 
@@ -46,10 +41,10 @@ def create_item(item: dict):
     description="Remove um item da tabela com base no ID.",
     status_code=200,
     response_model=dict)
-def delete_item(item_id: int):
-    api_filmes = API_Filmes(item={}, item_id=item_id)
+def delete_item(movie_id: int):
+    api_filmes = API_Filmes(item={}, movie_id=movie_id)
 
-    api_filmes.removerSerie()
+    api_filmes.remover()
 
     return {"message": "Item deletado com sucesso!"}
 
