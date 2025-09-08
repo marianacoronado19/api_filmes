@@ -62,7 +62,7 @@ class API_Filmes:
                 raise HTTPException(status_code=403, detail="Mudança não permitida (Não foi atribuído um ID)")
                 # Erro 403: Forbidden
 
-            sql = f"DELETE FROM {self.table_name} WHERE {self.movie_id} = %s"
+            sql = "DELETE FROM api_filmes WHERE movie_id = %s"
             params = (self.movie_id,)
 
             db.executar_consulta(sql, params)
@@ -72,7 +72,7 @@ class API_Filmes:
             db.desconectar()
             raise HTTPException(status_code=500, detail=f"Erro ao remover o item: {str(e)}")
         
-    def atualizarSerie(self):
+    def atualizar(self):
         '''Atualiza um item de alguma lista do banco de dados'''
         db.conectar()
 
@@ -86,7 +86,7 @@ class API_Filmes:
             
             set_clause = ", ".join([f"{key} = %s" for key in self.item.keys()]) 
             # para cada chave do dicionário, cria uma string no formato "chave = %s", separando por vírgula
-            sql = f"UPDATE {self.table_name} SET {set_clause} WHERE {self.movie_id} = %s"
+            sql = f"UPDATE api_filmes SET {set_clause} WHERE movie_id = %s"
             params = tuple(self.item.values()) + (self.movie_id,)
 
             db.executar_consulta(sql, params)

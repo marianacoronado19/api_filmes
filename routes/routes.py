@@ -53,9 +53,9 @@ def delete_item(movie_id: int):
     description="Atualiza os dados de um item na tabela especificada com base no ID.",
     status_code=200,
     response_model=dict)
-def update_item(item_id: int, item: dict):
-    api_filmes = API_Filmes(item=item, item_id=item_id)
+def update_item(movie_id: int, item: dict):
+    api_filmes = API_Filmes(item=item, movie_id=movie_id)   
 
-    api_filmes.atualizarSerie()
+    api_filmes.atualizar()
 
     return {"message": "Item atualizado com sucesso!"}
